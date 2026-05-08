@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAGA ANALYTICS | Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+    <div class="logo-container" onclick="showPage('home')">
+        <!-- Emplacement du logo -->
+        <img src="image/MAGALOGO.png" alt="Logo MAGA" class="app-logo">
+        <div class="logo-text">MAGA<span> ANALYTICS</span></div>
+    </div>
+    <nav>
+        <ul>
+            <li onclick="showPage('news')" id="nav-news">Actualités</li>
+            <li onclick="showPage('cal')" id="nav-cal">Calendrier</li>
+            <li onclick="showPage('market')" id="nav-market">Marchés</li>
+            <li onclick="showPage('broker')" id="nav-broker">Courtier</li>
+            <li onclick="showPage('edu')" id="nav-edu">Formation</li>
+        </ul>
+    </nav>
+    <div class="btn-reg" onclick="showPage('reg')">S'inscrire</div>
+</header>
+
+
+<div class="ticker-container">
+    <script type="text/javascript" src="https://tradingview.com" async>
+    {
+      "symbols": [
+        {"proName": "BITSTAMP:BTCUSD", "title": "BTC"},
+        {"proName": "FX_IDC:EURUSD", "title": "EUR/USD"},
+        {"proName": "OANDA:XAUUSD", "title": "OR"}
+      ],
+      "colorTheme": "dark",
+      "isTransparent": true,
+      "displayMode": "adaptive"
+    }
+    </script>
+</div>
+
+<div class="container">
+    <!-- PAGE ACCUEIL -->
+    <!-- PAGE ACCUEIL AVEC SLIDER -->
+<!-- PAGE ACCUEIL -->
+<div id="home" class="page active">
+    <section class="hero-slider">
+        <!-- Calque pour les images défilantes -->
+        <div id="bg-slides" class="bg-slides"></div>
+        <div class="overlay"></div>
+        
+        <div class="hero-content">
+            <h1>Bienvenue sur <span>MAGA ANALYTICS</span></h1>
+            <p>Votre hub financier pour l'analyse et le trading.</p>
+            <div class="card-alert">
+    <h3>Marchés en Direct</h3>
+    <!-- TradingView Widget BEGIN -->
+    <div class="tradingview-widget-container">
+        <div class="tradingview-widget-container__widget"></div>
+        <script type="text/javascript" src="https://tradingview.com" async>
+        {
+            "symbols": [
+                { "proName": "BITSTAMP:BTCUSD", "title": "Bitcoin" },
+                { "proName": "OANDA:XAUUSD", "title": "GOLD (Or)" },
+                { "proName": "INDEX:DXY", "title": "DXY (Dollar)" },
+                { "proName": "FOREXCOM:SPXUSD", "title": "S&P 500" },
+                { "proName": "INDEX:CAC40", "title": "CAC 40" }
+            ],
+            "showSymbolLogo": true,
+            "colorTheme": "dark",
+            "isTransparent": true,
+            "displayMode": "adaptive",
+            "locale": "fr"
+        }
+        </script>
+    </div>
+    <!-- TradingView Widget END -->
+</div>
+
+        </div>
+    </section>
+</div>
+
+    <!-- PAGE ACTUALITÉ -->
+    <div id="news" class="page">
+        <h2>Actualités Financières</h2>
+        <div class="grid-news" id="news-grid"></div>
+    </div>
+    <!-- Fenêtre Surgissante pour l'Article Complet fin -->
+
+    <!-- PAGE CALENDRIER -->
+    <section id="cal" class="page">
+    <h2 class="highlight">Calendrier Économique</h2>
+    
+    <!-- Widget Tradays BEGIN -->
+    <div id="tradays-widget-container" style="width: 100%; height: 600px; border-radius: 8px; overflow: hidden; border: 1px solid #333;">
+        <iframe 
+            src="https://tradays.com" 
+            width="100%" 
+            height="600" 
+            frameborder="0" 
+            scrolling="no">
+        </iframe>
+    </div>
+    <!-- Widget Tradays END -->
+    
+    <p style="font-size: 11px; color: #555; margin-top: 10px; text-align: center;">
+        Données fournies par Tradays. Temps réel sans délai.
+    </p>
+</section>
+
+    <!-- PAGE MARCHÉ -->
+    <div id="market" class="page">
+        <h2>Analyse des Marchés</h2>
+        <div style="display: flex; gap: 15px; margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 10px;">
+            <button onclick="showSubMarket('crypto')" class="sub-nav active-sub">Crypto</button>
+            <button onclick="showSubMarket('stocks')" class="sub-nav">Actions</button>
+            <button onclick="showSubMarket('forex')" class="sub-nav">Forex</button>
+            <button onclick="showSubMarket('commodities')" class="sub-nav">Matières Premières</button>
+        
+        </div>
+        <!-- Dans la section <div id="market"> -->
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+    <h2>Analyse des Marchés</h2>
+    <div id="refresh-timer" style="font-size: 12px; color: var(--jaune); background: rgba(255,215,0,0.1); padding: 5px 10px; border-radius: 20px; border: 1px solid var(--jaune);">
+        Prochaine mise à jour : <span id="seconds">30</span>s
+    </div>
+</div>
+<!--  section <section id="market"> -->
+    <table>
+        <thead>
+            <tr>
+                <th>Actif</th>
+                <th>Prix</th>
+                <th>Variation</th>
+                <th>Graphique</th> <!-- Nouvelle colonne -->
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="market-body"></tbody>
+    </table>
+
+<!-- Zone pour afficher le graphique sous le tableau (Optionnel) -->
+<div id="chart-container" style="margin-top: 30px; display: none;">
+    <h3 id="chart-title" style="color: var(--jaune);"></h3>
+    <div id="tradingview_widget"></div>
+</div>
+</div>
+<!--PAGE COURTIER -->
+<div id="broker" class="page">
+    <h2>Nos Courtiers <span class="highlight">Partenaires</span></h2>
+    <p style="text-align: center; color: var(--texte-gris);">Sélectionnez une plateforme régulée pour commencer à trader.</p>
+    
+    <div class="broker-grid">
+        <!-- Courtier 1 -->
+        <div class="broker-card">
+            <div class="broker-badge">Top Crypto</div>
+            <img src="image/DXY.png" alt="Binance">
+            <h3>Binance</h3>
+            <p>Leader mondial pour le trading de cryptomonnaies.</p>
+            <ul>
+                <li>✅ Plus de 350 cryptos</li>
+                <li>✅ Frais ultra-bas</li>
+            </ul>
+            <a href="VOTRE_LIEN_AFFILIATION_BINANCE" target="_blank" class="btn-trade">OUVRIR UN COMPTE</a>
+        </div>
+
+        <!-- Courtier 2 -->
+        <div class="broker-card">
+            <div class="broker-badge">Top Forex/Actions</div>
+            <img src="images/admirals-logo.png" alt="Admirals">
+            <h3>Admirals</h3>
+            <p>Courtier de référence pour le Forex et les Indices.</p>
+            <ul>
+                <li>✅ Spread serrés</li>
+                <li>✅ Plateforme MetaTrader 5</li>
+            </ul>
+            <a href="VOTRE_LIEN_AFFILIATION_ADMIRALS" target="_blank" class="btn-trade">OUVRIR UN COMPTE</a>
+        </div>
+
+        <!-- Courtier 3 -->
+        <div class="broker-card">
+            <div class="broker-badge">Multi-Actifs</div>
+            <img src="images/etoro-logo.png" alt="eToro">
+            <h3>eToro</h3>
+            <p>Idéal pour le Copy-Trading et les actions US.</p>
+            <ul>
+                <li>✅ 0% Commission sur actions</li>
+                <li>✅ Réseau social de trading</li>
+            </ul>
+            <a href="VOTRE_LIEN_AFFILIATION_ETORO" target="_blank" class="btn-trade">OUVRIR UN COMPTE</a>
+        </div>
+    </div>
+</div>
+
+
+    <!-- PAGE FORMATION -->
+    <div id="edu" class="page">
+        <h2>Centre de Formation</h2>
+        <div class="grid-news">
+            <div class="card"><h3>Guide Débutant : Le Forex</h3><p>Apprenez les bases du trading de devises étape par étape.</p></div>
+            <div class="card"><h3>Guide Débutant : Les cryptomonnaies</h3><p>Maîtrisez les chandeliers japonais et les indicateurs.</p></div>
+            <div class="card"><h3>Analyse Technique Pro</h3><p>Maîtrisez les chandeliers japonais et les indicateurs.</p></div>
+            <div class="card"><h3>Analyse fondamentale</h3><p>Maîtrisez les chandeliers japonais et les indicateurs.</p></div>
+            <div class="card"><h3>La technologie blockchain </h3><p>Maîtrisez les chandeliers japonais et les indicateurs.</p></div>
+            <div class="card"><h3>L'analyse Onchain</h3><p>Maîtrisez les chandeliers japonais et les indicateurs.</p></div>
+            <div class="card"><h3>Le price action</h3><p>Maîtrisez les chandeliers japonais et les indicateurs.</p></div>
+        </div>
+    </div>
+
+    <!-- PAGE INSCRIPTION -->
+ <section id="reg" class="page">
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h2>Créer un compte <span class="highlight">Gratuit</span></h2>
+                <p>Accédez à nos analyses exclusives et gérez votre watchlist.</p>
+            </div>
+            
+            <form id="register-form" class="auth-form">
+                <div class="input-group">
+                    <label>Nom complet</label>
+                    <input type="text" placeholder="Jean Dupont" required>
+                </div>
+                
+                <div class="input-group">
+                    <label>Adresse E-mail</label>
+                    <input type="email" placeholder="nom@exemple.com" required>
+                </div>
+                
+                <div class="input-group">
+                    <label>Mot de passe</label>
+                    <input type="password" placeholder="••••••••" required>
+                    <small>Minimum 8 caractères</small>
+                </div>
+
+                <div class="auth-options">
+                    <label class="checkbox-container">
+                        <input type="checkbox" required>
+                        <span class="checkmark"></span>
+                        J'accepte les <a href="#">Conditions d'utilisation</a>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn-auth">CRÉER MON COMPTE</button>
+            </form>
+
+            <div class="auth-footer">
+                <p>Déjà membre ? <a href="#" onclick="showPage('login')">Se connecter</a></p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="footer-soft">
+    <div class="footer-container">
+        <div class="footer-top">
+            <div class="footer-brand">
+                <div class="logo-text">MAGA<span> ANALYTICS</span></div>
+                <p>L'intelligence de marché à votre portée.</p>
+            </div>
+            <div class="footer-nav">
+                <a href="#" onclick="showPage('news')">Actualités</a>
+                <a href="#" onclick="showPage('market')">Marchés</a>
+                <a href="#" onclick="showPage('broker')">Courtier</a>
+                <a href="#" onclick="showPage('edu')">Formation</a>
+                <a href="#" onclick="showPage('reg')">Contact</a>
+                
+            </div>
+        </div>
+
+        <div class="footer-divider"></div>
+
+        <div class="footer-bottom">
+            <div class="legal-text">
+                &copy; 2026 MAGA ANALYTICS. Le trading comporte des risques de perte.
+            </div>
+            <div class="footer-socials">
+                <a href="#" class="wa-link">WhatsApp</a>
+                <a href="#">Facebook</a>
+                <a href="#">Youtube</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<div id="chart-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 id="modal-title">Analyse Graphique</h3>
+            <span class="close-modal" onclick="closeChart()">&times;</span>
+        </div>
+        <div id="tradingview_widget"></div>
+    </div>
+</div>
+
+
+<!-- FENÊTRE SURGISSANTE DES ARTICLES -->
+<div id="modal-article" class="modal-overlay">
+    <div class="modal-box">
+        <div class="modal-top">
+            <h2 id="modal-art-title"></h2>
+            <span class="btn-close" onclick="fermerArticle()">&times;</span>
+        </div>
+        <div class="modal-scroll-body">
+            <img id="modal-art-img" src="" alt="">
+            <div id="modal-art-text"></div>
+            
+            <!-- Bouton de partage WhatsApp -->
+            <div class="share-zone">
+                <a id="wa-share-link" href="#" target="_blank" class="wa-btn">
+                    Partager sur WhatsApp
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Fenêtre Surgissante (Modal) pour le Graphique -->
+<script src="script.js"></script>
+</body>
+</html>

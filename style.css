@@ -1,0 +1,686 @@
+:root 
+{ 
+    --jaune: #FFD700; 
+    --noir: #000000; 
+    --gris: #121212;
+    --texte-gris: #b3b3b3; 
+}
+
+body { 
+    margin: 0;
+     font-family: 'Inter',
+      sans-serif; background-color: var(--noir); 
+      color: white; 
+    }
+body {
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    transition: background-image 1.5s ease-in-out; /* Effet de fondu doux */
+}
+
+/* Optionnel : ajoutez un voile sombre pour que le texte du menu reste visible */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.4); /* Opacité de 40% */
+    z-index: -1;
+}
+
+header { 
+    background: var(--noir); padding: 15px 5%; display: flex; 
+    justify-content: space-between; align-items: center; border-bottom: 1px solid #333;
+    position: sticky; top: 0; z-index: 1000;
+}
+
+.logo {
+     font-size: 22px; font-weight: bold; color: var(--jaune); cursor: pointer;
+     }
+
+nav ul { list-style: none; display: flex; gap: 20px; padding: 0; }
+nav ul li { cursor: pointer; font-weight: 500; transition: 0.3s; color: white; }
+nav ul li:hover, nav ul li.active { color: var(--jaune); }
+
+.btn-reg { background: var(--jaune); color: black; padding: 8px 18px; border-radius: 4px; font-weight: bold; cursor: pointer; }
+
+.ticker-container { border-bottom: 1px solid var(--jaune); }
+
+.container { padding: 30px 5%; min-height: 70vh; }
+.page { display: none; }
+.page.active { display: block; animation: fadeIn 0.5s; }
+/* Conteneur global du logo */
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap:-50px; /* Espace proportionnel entre le logo et le texte */
+    cursor: pointer;
+}
+
+/* Style de l'image du logo */
+.app-logo {
+    height: 65px; /* Hauteur proportionnelle à la taille du texte MAGA */
+    width: auto;  /* Garde les proportions de l'image */
+    object-fit: contain;
+}
+
+/* Style du texte MAGA ANALYTICS */
+.logo-text {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--jaune);
+    line-height: 1;
+}
+
+.logo-text span {
+    color: var(--jaune);
+}
+
+/* Ajustement pour mobile */
+@media (max-width: 768px) {
+    .app-logo {
+        height: 35px;
+    }
+    .logo-text {
+        font-size: 20px;
+    }
+}
+
+
+
+/* style pour l'arriere plan d'acceuille*/
+/* --- HERO SLIDER --- */
+.hero-slider {
+    position: relative;
+    height: 80vh; /* Ajustez la hauteur selon vos besoins */
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.bg-slides {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: -2;
+    background-size: cover;
+    background-position: center;
+    transition: background-image 1.2s ease-in-out; /* Transition douce */
+}
+
+.overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.75); /* Voile noir pour la lisibilité */
+    z-index: -1;
+}
+
+.hero-content { z-index: 1; }
+.hero-content h1 { font-size: 3.5rem; margin-bottom: 10px; }
+.hero-content h1 span { color: var(--jaune); }
+
+/* Personnalisation de la barre de défilement pour la lecture menu Actualité */
+
+/* --- STYLE DE LA MODALE --- */
+/* --- STYLE DE LA MODALE MARCHE --- */
+
+.modal {
+    display: none; /* Caché par défaut */
+    position: fixed;
+    z-index: 2000;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.9); /* Fond très sombre */
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background-color: #121212;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid var(--jaune);
+    width: 90%;
+    max-width: 1000px;
+    border-radius: 12px;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.close-modal {
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+}
+/* --- STYLE DE LA MODALE MARCHE --- */
+
+/* --- STYLE DE LA ACTUALITE:LIRE  --- */
+
+.modal-overlay {
+    display: none; /* Caché au départ */
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 9999;
+    backdrop-filter: blur(8px);
+}
+
+/* La boîte de l'article */
+.modal-box {
+    background: #111;
+    border: 1px solid #FFD700;
+    width: 90%;
+    max-width: 800px;
+    margin: 50px auto;
+    border-radius: 12px;
+    padding: 25px;
+    max-height: 85vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.btn-close { color: #FFD700; font-size: 35px; cursor: pointer; font-weight: bold; }
+
+.modal-scroll-body
+ { 
+    overflow-y: auto; 
+    padding-right: 10px;
+ }
+.modal-scroll-body img {
+    display: block;
+    margin: 0 auto 20px auto; /* Centre l'image et ajoute une marge en bas */
+    
+    /* MODIFIEZ CES VALEURS POUR RÉDUIRE LA TAILLE */
+    width: 60%;               /* L'image prendra 60% de la largeur du texte au lieu de 100% */
+    max-height: 250px;        /* Limite la hauteur maximale (ajustez selon votre goût) */
+    
+    object-fit: cover;        /* Coupe proprement l'image si elle dépasse */
+    border-radius: 8px;
+    border: 1px solid #333;
+}
+
+#modal-art-text { line-height: 1.7; color: #ccc; font-size: 1.1rem; }
+
+/* Bouton WhatsApp */
+.wa-btn {
+    display: inline-block;
+    background: #FFD700;
+    color: #000;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-decoration: none;
+    margin-top: 20px;
+}
+
+#modal-art-text {
+    line-height: 1.7;
+    color: #ccc;
+    font-size: 1.1rem;
+    
+    /* --- SOLUTIONS POUR LE RETOUR À LA LIGNE --- */
+    white-space: normal;       /* Force le comportement de texte standard */
+    overflow-wrap: break-word; /* Casse les mots trop longs si nécessaire */
+    word-wrap: break-word;     /* Compatibilité ancienne */
+    word-break: normal;        /* Évite de couper les mots n'importe où */
+    
+    /* Assure que le texte ne pousse pas les bords */
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.modal-scroll-body {
+    overflow-y: auto;
+    overflow-x: hidden; /* Empêche tout défilement horizontal */
+    padding-right: 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* ---  FIN STYLE DE LA ACTUALITE:LIRE  --- */
+/* Configurqtion stylisé de l' API Tradays */
+#tradays-widget-container {
+    background-color: #000;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    margin: 20px auto;
+}
+
+/* Optimisation pour mobile */
+@media (max-width: 768px) {
+    #tradays-widget-container iframe {
+        height: 500px;
+    }
+}
+
+
+
+/* fin Configurqtion stylisé de l' API Tradays */
+
+
+
+.card-alert {
+    background: rgba(18, 18, 18, 0.85);
+    border: 1px solid var(--jaune);
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 30px;
+    width: 90%; /* On l'élargit pour le bandeau */
+    max-width: 800px;
+    display: inline-block;
+    backdrop-filter: blur(8px);
+    overflow: hidden; /* Pour éviter que le widget ne dépasse mal */
+}
+
+.card-alert h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1rem;
+    color: var(--jaune);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#refresh-timer {
+    font-family: monospace;
+    font-weight: bold;
+    min-width: 150px;
+    text-align: center;
+    transition: 0.3s;
+}
+
+/* Optionnel : pulse quand il reste moins de 5 secondes * actualisation de la page marché #crypto*/
+.low-time {
+    color: #ff4d4d !important;
+    border-color: #ff4d4d !important;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+/* Ajustement pour que le widget TradingView s'intègre bien */
+.tradingview-widget-container {
+    width: 100% !important;
+}
+
+
+.highlight {
+    color: var(--jaune);
+    text-transform: uppercase;
+}
+
+/* Optionnel : harmoniser la taille des titres de rubriques */
+.page h1, .page h2{
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+
+.btn-chart {
+    background:#fae901 ;
+    border: 1px solid #fae901;
+    color: black;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: 0.3s;
+}
+
+.btn-chart:hover {
+    border-color: var(--jaune);
+    color: var(--jaune);
+    background: rgba(255, 215, 0, 0.1);
+}
+
+#tradingview_widget {
+    border: 1px solid #333;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* --- SECTION INSCRIPTION --- */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 0;
+}
+
+.auth-card {
+    background: var(--gris);
+    border: 1px solid #333;
+    border-radius: 12px;
+    padding: 40px;
+    width: 100%;
+    max-width: 450px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.auth-header { text-align: center; margin-bottom: 30px; }
+.auth-header h2 { margin-bottom: 10px; font-size: 1.8rem; }
+.auth-header p { color: var(--texte-gris); font-size: 0.9rem; }
+
+.auth-form .input-group { margin-bottom: 20px; text-align: left; }
+.auth-form label { display: block; margin-bottom: 8px; font-size: 0.85rem; color: var(--jaune); font-weight: bold; }
+
+.auth-form input[type="text"], 
+.auth-form input[type="email"], 
+.auth-form input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 6px;
+    color: white;
+    box-sizing: border-box;
+    transition: 0.3s;
+}
+
+.auth-form input:focus {
+    border-color: var(--jaune);
+    outline: none;
+    background: #222;
+}
+
+.auth-form small { color: #555; font-size: 0.75rem; display: block; margin-top: 5px; }
+
+
+
+.btn-auth {
+    width: 100%;
+    padding: 14px;
+    background: var(--jaune);
+    color: black;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 10px;
+}
+
+/* --- SECTION COURTIER --- */
+.broker-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.broker-card {
+    background: var(--gris);
+    border: 1px solid #333;
+    border-radius: 15px;
+    padding: 30px;
+    text-align: center;
+    position: relative;
+    transition: 0.3s;
+}
+
+.broker-card:hover {
+    border-color: var(--jaune);
+    transform: translateY(-10px);
+}
+
+.broker-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: var(--jaune);
+    color: black;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 3px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+
+.broker-card img {
+    height: 60px;
+    width: auto;
+    margin-bottom: 20px;
+    filter: grayscale(100%); /* Optionnel : logos en gris qui s'allument au hover */
+    transition: 0.3s;
+}
+
+.broker-card:hover img {
+    filter: grayscale(5%);
+}
+
+.broker-card h3 {
+    color: white;
+    margin-bottom: 10px;
+}
+
+.broker-card p {
+    font-size: 13px;
+    color: var(--texte-gris);
+    margin-bottom: 15px;
+}
+
+.broker-card ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+    text-align: left;
+    font-size: 12px;
+}
+
+.broker-card ul li {
+    margin-bottom: 8px;
+    color: #ccc;
+}
+
+
+.close-modal:hover { color: var(--jaune); }
+
+#tradingview_widget {
+    height: 500px; /* Hauteur fixe pour le graphique dans la modale */
+    width: 100%;
+}
+
+.footer-soft {
+    background-color: var(--noir);
+    padding: 60px 5% 30px 5%;
+    border-top: 1px solid #1a1a1a; /* Bordure très discrète */
+    color: var(--texte-gris);
+}
+
+.footer-container {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.footer-brand p {
+    font-size: 14px;
+    margin-top: 10px;
+    letter-spacing: 0.5px;
+}
+
+.footer-nav {
+    display: flex;
+    gap: 30px;
+}
+
+.footer-nav a {
+    color: var(--texte-gris);
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.footer-nav a:hover {
+    color: var(--jaune);
+}
+
+.footer-divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, #333, transparent);
+    margin-bottom: 30px;
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: #555;
+}
+
+.footer-socials {
+    display: flex;
+    gap: 25px;
+}
+
+.footer-socials a {
+    color: #888;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.footer-socials a:hover {
+    color: var(--jaune);
+}
+
+.wa-link {
+    color: var(--jaune) !important; /* On garde WhatsApp en évidence mais discret */
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .footer-top, .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+    .footer-nav {
+        justify-content: center;
+    }
+}
+/* --- ADAPTATION SMARTPHONES (Moins de 768px) --- */
+@media (max-width: 768px) {
+    /* Header : On empile le menu ou on réduit l'espace */
+    header {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px 2%;
+    }
+
+    nav ul {
+        gap: 10px;
+        font-size: 13px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    /* Hero Section / Accueil */
+    .hero-content h1 {
+        font-size: 2rem; /* Titre plus petit pour mobile */
+    }
+
+    .card-alert {
+        width: 95%;
+        padding: 10px;
+    }
+
+    /* Tableaux : On permet le défilement horizontal pour éviter d'écraser les prix */
+    .page table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    /* Grille d'actualités : 1 seule colonne */
+    .grid-news {
+        grid-template-columns: 1fr;
+    }
+
+    /* Footer Soft */
+    .footer-top {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-nav {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+}
+
+/* --- OPTIMISATION PETITS MOBILES (Moins de 480px) --- */
+@media (max-width: 480px) {
+    .logo-text { font-size: 18px; }
+    .app-logo { height: 30px; }
+    .btn-reg { width: 100%; text-align: center; }
+}
+
+
+.btn-auth:hover { background: #e6c200; transform: translateY(-2px); }
+
+.auth-footer { text-align: center; margin-top: 25px; font-size: 0.9rem; color: var(--texte-gris); }
+.auth-footer a { color: var(--jaune); text-decoration: none; font-weight: bold; }
+
+/* Custom Checkbox */
+.checkbox-container { font-size: 0.8rem; color: var(--texte-gris); cursor: pointer; display: flex; align-items: center; gap: 8px; }
+.checkbox-container a { color: var(--jaune); text-decoration: underline; }
+
+
+
+
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.grid-news { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
+
+.card { background: var(--gris); border: 1px solid #333; padding: 20px; border-radius: 8px; }
+.card h3 { color: var(--jaune); margin-top: 0; }
+.card p { color: var(--texte-gris); font-size: 14px; }
+
+/* Styles spécifiques News avec Images */
+.card-news { background: var(--gris); border-radius: 10px; overflow: hidden; border: 1px solid #333; transition: 0.3s; }
+.card-news:hover { transform: translateY(-5px); border-color: var(--jaune); }
+.card-news img { width: 100%; height: 180px; object-fit: cover; }
+.card-content { padding: 20px; }
+.category { color: var(--jaune); font-size: 11px; font-weight: bold; text-transform: uppercase; }
+.read-more { color: var(--jaune); font-weight: bold; font-size: 13px; text-decoration: none; display: block; margin-top: 10px; }
+
+table { width: 100%; border-collapse: collapse; background: var(--gris); border-radius: 8px; overflow: hidden; }
+th { background: #222; color: var(--jaune); text-align: left; padding: 15px; }
+td { padding: 15px; border-bottom: 1px solid #333; }
+
+.impact-high { color: #ff4d4d; font-weight: bold; }
+.btn-trade { background: var(--jaune); color: black; padding: 5px 10px; border-radius: 4px; font-size: 12px; font-weight: bold; text-decoration: none; }
+
+.sub-nav { background: none; border: 1px solid var(--jaune); color: var(--jaune); padding: 8px 15px; cursor: pointer; border-radius: 4px; font-weight: bold; }
+.sub-nav.active-sub { background: var(--jaune); color: black; }
+
+footer { border-top: 2px solid var(--jaune); padding: 40px 5%; background: var(--noir); margin-top: 50px; }
