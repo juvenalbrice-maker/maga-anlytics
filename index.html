@@ -95,17 +95,21 @@
     <!-- PAGE CALENDRIER -->
     <section id="cal" class="page">
     <h2 class="highlight">Calendrier Économique</h2>
-    
-    <!-- Widget Tradays BEGIN -->
-    <div id="tradays-widget-container" style="width: 100%; height: 600px; border-radius: 8px; overflow: hidden; border: 1px solid #333;">
-        <iframe 
-            src="https://tradays.com" 
-            width="100%" 
-            height="600" 
-            frameborder="0" 
-            scrolling="no">
-        </iframe>
+    <div class="tradingview-widget-container">
+        <div class="tradingview-widget-container__widget"></div>
+        <script type="text/javascript" src="https://tradingview.com" async>
+        {
+          "colorTheme": "dark",
+          "isTransparent": true,
+          "width": "100%",
+          "height": "600",
+          "locale": "fr",
+          "importanceFilter": "-1,0,1"
+        }
+        </script>
     </div>
+</section>
+
     <!-- Widget Tradays END -->
     
     <p style="font-size: 11px; color: #555; margin-top: 10px; text-align: center;">
@@ -124,12 +128,33 @@
         
         </div>
         <!-- Dans la section <div id="market"> -->
-<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-    <h2>Analyse des Marchés</h2>
-    <div id="refresh-timer" style="font-size: 12px; color: var(--jaune); background: rgba(255,215,0,0.1); padding: 5px 10px; border-radius: 20px; border: 1px solid var(--jaune);">
-        Prochaine mise à jour : <span id="seconds">30</span>s
+<section id="market" class="page">
+    <h2 class="highlight">Cours en Direct</h2>
+    <div class="tradingview-widget-container">
+        <div class="tradingview-widget-container__widget"></div>
+        <script type="text/javascript" src="https://tradingview.com" async>
+        {
+          "colorTheme": "dark",
+          "dateRange": "12M",
+          "showChart": true,
+          "locale": "fr",
+          "width": "100%",
+          "height": "600",
+          "tabs": [
+            {
+              "title": "Crypto",
+              "symbols": [{ "s": "BINANCE:BTCUSDT" }, { "s": "BINANCE:ETHUSDT" }]
+            },
+            {
+              "title": "Forex",
+              "symbols": [{ "s": "FX:EURUSD" }, { "s": "FX:GBPUSD" }]
+            }
+          ]
+        }
+        </script>
     </div>
-</div>
+</section>
+
 <!--  section <section id="market"> -->
     <table>
         <thead>
